@@ -8,6 +8,7 @@ use App\Models\User;
 use Image;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class AdminController extends Controller
 {
@@ -100,11 +101,53 @@ class AdminController extends Controller
 
     }// End Method 
 
-    public function ChangePassword(){
+    
 
-        return view('admin.admin_change_password');
+    //// Change password
 
-    }// End Method
+    public function AdminChangePassword(){
+
+        $id = Auth::user()->id;
+        $profileData = User::find($id);
+        return view('admin.admin_change_password',compact('profileData'));
+    } // end method
+
+    public function AdminUpdatePassword(Request $request){
+
+        // Validation 
+        $request->validate([
+            'old_password' => ['required', Rules\Password::defaults()],
+            'new_password' => ['required', 'confirmed', Rules\Password::defaults()],
+
+        ]);
+
+        /// Match The Old Password
+
+        if (!Hash::check($request->old_password, auth::user()->password)) {
+
+           $notification = array(
+            'message' => 'Old Password Does not Match!',
+            'alert-type' => 'error'
+        );
+
+        return back()->with($notification);
+        }
+
+        /// Update The New Password 
+
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+
+        ]);
+
+         $notification = array(
+            'message' => 'Password Change Successfully',
+            'alert-type' => 'success'
+        );
+
+        return back()->with($notification); 
+
+     }// End Method 
 
     
 }
