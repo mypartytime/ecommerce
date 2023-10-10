@@ -46,13 +46,13 @@ class AdminController extends Controller
 
         
 
-        if($request->file('profile_image')){
+        if($request->file('photo')){
 
             if (!empty($oldphoto)) {
-                unlink('upload/admin_photo/'.$oldphoto);
+                unlink($oldphoto);
             }
 
-            $image = $request->file('profile_image');
+            $image = $request->file('photo');
             $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
             Image::make($image)->resize(200,200)->save('upload/admin_photo/'.$name_gen);
             $save_url = 'upload/admin_photo/'.$name_gen;
@@ -60,8 +60,8 @@ class AdminController extends Controller
             User::findOrFail($profile_id)->update([
 
                 'name' => $request->name,
-                'phone' => $request->username,
-                'address' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
                 'photo' => $save_url,
                 'updated_at' => Carbon::now(),
             ]);
@@ -81,8 +81,8 @@ class AdminController extends Controller
             User::findOrFail($profile_id)->update([
 
                 'name' => $request->name,
-                'phone' => $request->username,
-                'address' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
                 'updated_at' => Carbon::now(),
             ]);
 

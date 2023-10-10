@@ -27,7 +27,7 @@
     <div class="col-lg-8">
         <div class="card">
 
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{{route('admin.update')}}" method="post" enctype="multipart/form-data">
                 @csrf
 
             <input type="hidden" name="old_photo" value="{{ $profileData->photo }}" />
@@ -74,7 +74,7 @@
                         <h6 class="mb-0">  </h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                        <img id="showImage" src="{{ (!empty($profileData->photo)) ? url('upload/admin_images/'.$profileData->photo) : url('upload/no_image.jpg') }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="80">
+                        <img id="showImage" src="{{ (!empty($profileData->photo)) ? url($profileData->photo) : url('upload/no_image.jpg') }}" alt="Admin" class="rounded-circle p-1 bg-primary" width="80">
                     </div>
                 </div>
                
