@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Image;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -32,31 +35,76 @@ class AdminController extends Controller
 
     }// End Method 
 
-    public function AdminProfileStore(Request $request){
+    public function AdminUpdate(Request $request){
 
-        $id = Auth::user()->id;
-        $data = User::find($id);
-        $data->name = $request->name;
-        $data->email = $request->email;
-        $data->phone = $request->phone;
-        $data->address = $request->address;
+        $profile_id = Auth::user()->id;
 
-        if($request->file('photo')){
-            $file = $request->file('photo');
-            @unlink(public_path('upload/admin_images/'.$data->photo));
-            $filename = date('YmdHi').$file->getClientOriginalName();  
-            $file->move(public_path('upload/admin_images'),$filename);
-            $data['photo'] = $filename;
+        $old_photo = "";
 
-        }
-        $data->save();
+        $oldphoto = $request->old_photo;
 
-        $notification = array(
-            'message' => 'Admin Profile Updated Successfully',
-            'alert-type' => 'success'
-        );
 
-        return redirect()->back()->with($notification);
+        
+
+        if($request->file('profile_image')){
+
+            if (!empty($oldphoto)) {
+                unlink('upload/admin_photo/'.$oldphoto);
+            }
+
+            $image = $request->file('profile_image');
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            Image::make($image)->resize(200,200)->save('upload/admin_photo/'.$name_gen);
+            $save_url = 'upload/admin_photo/'.$name_gen;
+
+            User::findOrFail($profile_id)->update([
+
+                'name' => $request->name,
+                'phone' => $request->username,
+                'address' => $request->email,
+                'photo' => $save_url,
+                'updated_at' => Carbon::now(),
+            ]);
+
+            $notification = array(
+                'message' => 'ตั้งค่าโปรไฟล์ใหม่เรียบร้อยแล้ว', 
+                'alert-type' => 'info'
+            );
+
+            
+
+            return redirect()->back()->with($notification);
+
+
+        } else {
+
+            User::findOrFail($profile_id)->update([
+
+                'name' => $request->name,
+                'phone' => $request->username,
+                'address' => $request->email,
+                'updated_at' => Carbon::now(),
+            ]);
+
+            $notification = array(
+                'message' => 'ตั้งค่าโปรไฟล์ใหม่เรียบร้อยแล้วแบบไม่มีรูป', 
+                'alert-type' => 'info'
+            );
+
+            
+
+            return redirect()->back()->with($notification);
+
+        } // End Eles 
+
 
     }// End Method 
+
+    public function ChangePassword(){
+
+        return view('admin.admin_change_password');
+
+    }// End Method
+
+    
 }
