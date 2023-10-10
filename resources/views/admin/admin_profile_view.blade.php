@@ -2,6 +2,7 @@
 @section('admin') 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
+
 <div class="page-content">
 				<!--breadcrumb-->
 				<div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -27,7 +28,7 @@
     <div class="col-lg-8">
         <div class="card">
 
-            <form action="{{route('admin.update')}}" method="post" enctype="multipart/form-data">
+            <form  id="myForm" action="{{route('admin.update')}}" method="post" enctype="multipart/form-data">
                 @csrf
 
             <input type="hidden" name="old_photo" value="{{ $profileData->photo }}" />
@@ -37,7 +38,7 @@
                     <div class="col-sm-3">
                         <h6 class="mb-0"> Name</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div class="col-sm-9 text-secondary form-group">
                         <input type="text" name="name" class="form-control" value="{{ $profileData->name }}" />
                     </div>
                 </div>
@@ -46,7 +47,7 @@
                     <div class="col-sm-3">
                         <h6 class="mb-0">Phone</h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div class="col-sm-9 text-secondary form-group">
                         <input type="text" name="phone" class="form-control" value="{{ $profileData->phone }}" />
                     </div>
                 </div>
@@ -54,7 +55,7 @@
                     <div class="col-sm-3">
                         <h6 class="mb-0">Address </h6>
                     </div>
-                    <div class="col-sm-9 text-secondary">
+                    <div class="col-sm-9 text-secondary form-group">
                         <input type="text" name="address" class="form-control" value="{{ $profileData->address }}" />
                     </div>
                 </div>
@@ -113,5 +114,52 @@
         });
 
         </script>      
+
+<script type="text/javascript">
+    $(document).ready(function (){
+        $('#myForm').validate({
+            rules: {
+                name: {
+                    required : true,
+                },
+                phone: {
+                    required : true,
+                },
+                address: {
+                    required : true,
+                },
+                 
+                 
+                
+            },
+            messages :{
+                name: {
+                    required : 'Please Enter Name',
+                },
+                phone: {
+                    required : 'Please Enter Phone no',
+                },
+                address: {
+                    required : 'Please Enter Address',
+                },
+                
+                 
+
+            },
+            errorElement : 'span', 
+            errorPlacement: function (error,element) {
+                error.addClass('invalid-feedback');
+                element.closest('.form-group').append(error);
+            },
+            highlight : function(element, errorClass, validClass){
+                $(element).addClass('is-invalid');
+            },
+            unhighlight : function(element, errorClass, validClass){
+                $(element).removeClass('is-invalid');
+            },
+        });
+    });
+    
+</script>
 
 @endsection
