@@ -39,7 +39,9 @@
 						<div class="menu-title">Brand</div>
 					</a>
 					<ul>
-						<li> <a href="charts-apex-chart.html"><i class="bx bx-right-arrow-alt"></i>All Brand</a>
+						<li> <a href="{{route('all.brand')}}"><i class="bx bx-right-arrow-alt"></i>All Brand</a>
+						</li>
+						<li> <a href="{{route('add.brand')}}"><i class="bx bx-right-arrow-alt"></i>Add Brand</a>
 						</li>
 						
 					</ul>

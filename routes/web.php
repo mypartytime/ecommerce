@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Backend\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,13 +63,13 @@ Route::middleware(['auth', 'verified'])->group(function() {
     
 }); // Gorup Milldeware User Controller End
 
-Route::middleware(['auth','role:admin'])->group(function() {
+Route::middleware(['auth','roles:admin'])->group(function() {
 
 
     // Brand All Route 
    Route::controller(BrandController::class)->group(function(){
        Route::get('/all/brand' , 'AllBrand')->name('all.brand');
-   
+       Route::get('/add/brand' , 'AddBrand')->name('add.brand');
    });
    
    

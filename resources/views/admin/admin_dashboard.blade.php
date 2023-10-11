@@ -26,6 +26,12 @@
 	<!-- Toastr -->
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" >
 
+	<!-- DataTable -->
+	<link href="{{ asset('adminbackend/assets/plugins/datatable/css/dataTables.bootstrap5.min.css') }}" rel="stylesheet" />
+	<!-- DataTable-->
+
+	
+
 	<title>Mike Shop</title>
 </head>
 
@@ -85,6 +91,15 @@
         <script src="{{ asset('backend/assets/js/pages/datatables.init.js') }}"></script>
 
 		<script src="{{ asset('backend/assets/js/validate.min.js') }}"></script>
+
+		<!--Datatable-->
+<script src="{{ asset('backend/assets/plugins/datatable/js/jquery.dataTables.min.js') }}"></script>
+<script>
+		$(document).ready(function() {
+			$('#example').DataTable();
+		  } );
+	</script>
+<!--Datatable-->
 
         
 
