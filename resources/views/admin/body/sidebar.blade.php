@@ -30,6 +30,21 @@
 						</li>
 					</ul>
 				</li>
+
+				<li class="menu-label">Management</li>
+				<li>
+					<a class="has-arrow" href="javascript:;">
+						<div class="parent-icon"><i class="bx bx-line-chart"></i>
+						</div>
+						<div class="menu-title">Brand</div>
+					</a>
+					<ul>
+						<li> <a href="charts-apex-chart.html"><i class="bx bx-right-arrow-alt"></i>All Brand</a>
+						</li>
+						
+					</ul>
+				</li>
+				<li>
 				
 				<li class="menu-label">Charts & Maps</li>
 				<li>
