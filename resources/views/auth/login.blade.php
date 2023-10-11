@@ -55,10 +55,10 @@
             @csrf
 
                 <div class="form-group">
-                    <input type="email" id="email"  required="" name="email" placeholder="Username or Email *" />
+                    <input type="email" id="email"  required="" name="email" placeholder="Email *" />
                 </div>
                 <div class="form-group">
-                    <input required="" id="password" type="password" name="password" placeholder="Your password *" />
+                    <input required="" id="password" type="password" name="password" placeholder="Password *" />
                 </div>
                  
                 <div class="login_footer form-group mb-50">

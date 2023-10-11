@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,3 +49,15 @@ Route::middleware(['auth','roles:admin'])->group(function(){
 });
 
 //End Admin Group Middleware
+
+// add verified when you what user to confirm before login to system
+
+Route::middleware(['auth', 'verified'])->group(function() {
+
+    Route::get('/dashboard', [UserController::class, 'UserDashboard'])->name('dashboard');
+    Route::post('/user/profile/store', [UserController::class, 'UserProfileStore'])->name('user.profile.store');
+    Route::get('/user/logout', [UserController::class, 'UserLogout'])->name('user.logout');
+    Route::post('/user/update/password', [UserController::class, 'UserUpdatePassword'])->name('user.update.password');
+    
+    
+}); // Gorup Milldeware User Controller End
